@@ -27,8 +27,8 @@ const TIERS = [
   {
     name: "Pro",
     slug: "pro",
-    stripePriceId: process.env.STRIPE_PRICE_PRO_MONTHLY || "price_REPLACE_ME",
-    price: 9900, // $99.00
+    stripePriceId: process.env.STRIPE_PRICE_PRO_MONTHLY || null,
+    price: 1900, // $19.00
     interval: "month",
     maxAgents: 500,
     logRetention: 90,
@@ -48,8 +48,7 @@ const TIERS = [
   {
     name: "Enterprise",
     slug: "enterprise",
-    stripePriceId:
-      process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY || "price_REPLACE_ME",
+    stripePriceId: process.env.STRIPE_PRICE_ENTERPRISE_MONTHLY || null,
     price: 0, // custom pricing
     interval: "month",
     maxAgents: -1, // unlimited
@@ -71,6 +70,15 @@ const TIERS = [
 
 async function seed() {
   console.log("Seeding billing tiers...");
+
+  for (const tier of TIERS) {
+    if (tier.slug !== "free" && !tier.stripePriceId) {
+      const envVar = `STRIPE_PRICE_${tier.slug.toUpperCase()}_MONTHLY`;
+      throw new Error(
+        `Missing Stripe price ID for "${tier.name}" tier. Set ${envVar} before seeding.`
+      );
+    }
+  }
 
   for (const tier of TIERS) {
     await prisma.billingTier.upsert({

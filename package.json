@@ -10,7 +10,7 @@
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:push": "prisma db push",
-    "db:seed": "npx ts-node prisma/seed-billing-tiers.ts"
+    "db:seed": "npx ts-node -O {\"module\":\"commonjs\"} prisma/seed-billing-tiers.ts"
   },
   "dependencies": {
     "next": "14.2.21",

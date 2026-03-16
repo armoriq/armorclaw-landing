@@ -8,30 +8,30 @@ gsap.registerPlugin(ScrollTrigger);
 
 const PLANS = [
   {
-    name: "Starter",
+    name: "Free",
     price: "$0",
     period: "/mo",
     description:
-      "For teams exploring intent assurance with small-scale agent deployments.",
+      "Get started with ArmorClaw. Perfect for exploring intent assurance on personal projects.",
     features: [
-      "Up to 50 agents",
+      "Up to 5 agents",
       "Basic intent logging",
       "Community support",
       "7-day log retention",
       "Standard policies",
     ],
-    cta: "Start Free",
+    cta: "Get Started Free",
     featured: false,
     tier: "free",
   },
   {
     name: "Pro",
-    price: "$99",
+    price: "$19",
     period: "/mo",
     description:
       "Full intent assurance for production agent workloads with custom policy control.",
     features: [
-      "Up to 500 agents",
+      "Up to 100 agents",
       "Full intent assurance",
       "Custom policy engine",
       "Priority support",
@@ -47,7 +47,7 @@ const PLANS = [
     price: "Custom",
     period: "",
     description:
-      "Dedicated infrastructure, compliance, and support for large-scale deployments.",
+      "Dedicated infrastructure, compliance, and support tailored to your organization.",
     features: [
       "Unlimited agents",
       "Dedicated support and SLA",
@@ -63,7 +63,7 @@ const PLANS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: "Agents", free: "50", pro: "500", enterprise: "Unlimited" },
+  { feature: "Agents", free: "5", pro: "100", enterprise: "Unlimited" },
   { feature: "Intent Logging", free: "Basic", pro: "Full", enterprise: "Full" },
   {
     feature: "Intent Assurance",

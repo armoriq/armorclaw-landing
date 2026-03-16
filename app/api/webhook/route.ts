@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getStripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import Stripe from "stripe";
+import { Prisma } from "@prisma/client";
 
 export async function POST(req: NextRequest) {
   const body = await req.text();
@@ -11,37 +12,42 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Missing signature" }, { status: 400 });
   }
 
+  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  if (!webhookSecret) {
+    console.error("STRIPE_WEBHOOK_SECRET is not configured");
+    return NextResponse.json(
+      { error: "Webhook secret not configured" },
+      { status: 500 }
+    );
+  }
+
   let event: Stripe.Event;
   try {
-    event = getStripe().webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
+    event = getStripe().webhooks.constructEvent(body, signature, webhookSecret);
   } catch (err) {
     const message = err instanceof Error ? err.message : "Unknown error";
     console.error("Webhook signature verification failed:", message);
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
-  // Idempotency: skip already-processed events
-  const existing = await prisma.webhookEvent.findUnique({
-    where: { stripeEventId: event.id },
-  });
-  if (existing?.processed) {
-    return NextResponse.json({ received: true, duplicate: true });
+  // Idempotency: atomically claim this event via unique constraint
+  try {
+    await prisma.webhookEvent.create({
+      data: {
+        stripeEventId: event.id,
+        eventType: event.type,
+        payload: JSON.parse(JSON.stringify(event.data)),
+      },
+    });
+  } catch (err) {
+    if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
+    ) {
+      return NextResponse.json({ received: true, duplicate: true });
+    }
+    throw err;
   }
-
-  // Record the event
-  await prisma.webhookEvent.upsert({
-    where: { stripeEventId: event.id },
-    create: {
-      stripeEventId: event.id,
-      eventType: event.type,
-      payload: JSON.parse(JSON.stringify(event.data)),
-    },
-    update: {},
-  });
 
   try {
     switch (event.type) {
@@ -110,7 +116,10 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
 
   const customerId = session.customer as string;
   const subscriptionId = session.subscription as string;
-  const email = session.customer_email || session.customer_details?.email || "";
+  const email = session.customer_email || session.customer_details?.email;
+  if (!email) {
+    throw new Error("Missing customer email on checkout session");
+  }
   const tier = session.metadata?.tier || "pro";
   const orgId = session.metadata?.orgId || customerId;
 
@@ -125,7 +134,7 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     },
     update: {
       stripeCustomerId: customerId,
-      email: email || undefined,
+      email,
     },
   });
 
@@ -293,5 +302,5 @@ function mapSubscriptionStatus(
     unpaid: "PAST_DUE",
     paused: "PAUSED",
   };
-  return map[status] || "ACTIVE";
+  return map[status] ?? "INCOMPLETE";
 }

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Dashboard", href: "#dashboard" },
   { label: "Pricing", href: "#pricing" },
 ];
 
@@ -30,9 +31,13 @@ export default function Navbar() {
         {/* Logo */}
         <a
           href="#"
-          className="text-xl font-bold font-heading text-primary select-none"
+          className="flex items-center gap-2 select-none"
         >
-          Armor<span className="text-accent">Claw</span>
+          <img
+            src="/images/logo.svg"
+            alt="ArmorIQ"
+            className="h-7"
+          />
         </a>
 
         {/* Desktop links */}

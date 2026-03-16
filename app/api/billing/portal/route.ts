@@ -24,9 +24,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!baseUrl) {
+      console.error("NEXT_PUBLIC_APP_URL is not configured");
+      return NextResponse.json(
+        { error: "Server misconfiguration" },
+        { status: 500 }
+      );
+    }
+
     const session = await getStripe().billingPortal.sessions.create({
       customer: billingCustomer.stripeCustomerId,
-      return_url: `${req.nextUrl.origin}/pricing`,
+      return_url: `${baseUrl}/#pricing`,
     });
 
     return NextResponse.json({ url: session.url });

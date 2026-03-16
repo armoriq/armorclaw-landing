@@ -1,9 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getStripe, TIER_PRICE_MAP } from "@/lib/stripe";
 
+const ALLOWED_CHECKOUT_TIERS = new Set(["pro"]);
+
 export async function POST(req: NextRequest) {
   try {
     const { tier, email, orgId } = await req.json();
+
+    if (!tier || !ALLOWED_CHECKOUT_TIERS.has(tier)) {
+      return NextResponse.json(
+        { error: `Tier not available for self-service checkout: ${tier}` },
+        { status: 400 }
+      );
+    }
 
     const priceId = TIER_PRICE_MAP[tier];
     if (!priceId) {
@@ -13,14 +22,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const origin = req.nextUrl.origin;
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL;
+    if (!baseUrl) {
+      console.error("NEXT_PUBLIC_APP_URL is not configured");
+      return NextResponse.json(
+        { error: "Server misconfiguration" },
+        { status: 500 }
+      );
+    }
 
     const session = await getStripe().checkout.sessions.create({
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/checkout/cancel`,
+      success_url: `${baseUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${baseUrl}/checkout/cancel`,
       metadata: {
         tier,
         ...(orgId && { orgId }),
