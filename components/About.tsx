@@ -29,38 +29,29 @@ export default function About() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".about-heading-line", {
-        yPercent: 100,
-        duration: 0.9,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".about-heading",
-          start: "top 80%",
-        },
+      gsap.from(".about-heading", {
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        ease: "power2.out",
+        scrollTrigger: { trigger: ".about-heading", start: "top 88%" },
       });
 
       gsap.from(".about-body", {
-        y: 40,
+        y: 16,
         opacity: 0,
-        duration: 0.8,
+        duration: 0.45,
         ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".about-body",
-          start: "top 82%",
-        },
+        scrollTrigger: { trigger: ".about-body", start: "top 90%" },
       });
 
       gsap.from(".about-point", {
-        y: 50,
+        y: 18,
         opacity: 0,
-        duration: 0.8,
-        stagger: 0.15,
+        duration: 0.45,
+        stagger: 0.08,
         ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".about-points",
-          start: "top 78%",
-        },
+        scrollTrigger: { trigger: ".about-points", start: "top 88%" },
       });
     }, sectionRef);
 
@@ -74,21 +65,12 @@ export default function About() {
       className="py-24 md:py-32 lg:py-40 px-6"
     >
       <div className="max-w-6xl mx-auto">
-        {/* Heading */}
-        <div className="about-heading">
-          {[
-            "OpenClaw Gives Agents Power.",
-            "ArmorClaw Gives You Control.",
-          ].map((line, i) => (
-            <div key={i} className="overflow-hidden">
-              <h2 className="about-heading-line text-3xl md:text-5xl lg:text-6xl font-bold font-heading tracking-tight leading-[1.15]">
-                {line}
-              </h2>
-            </div>
-          ))}
-        </div>
+        <h2 className="about-heading text-3xl md:text-5xl lg:text-6xl font-bold font-heading tracking-tight leading-[1.15]">
+          OpenClaw Gives Agents Power.
+          <br />
+          ArmorClaw Gives You Control.
+        </h2>
 
-        {/* Body text */}
         <div className="about-body mt-12 max-w-3xl">
           <p className="text-lg md:text-xl text-secondary leading-relaxed font-body">
             OpenClaw enables AI agents to reason, plan, and execute across
@@ -99,7 +81,6 @@ export default function About() {
           </p>
         </div>
 
-        {/* Key points */}
         <div className="about-points mt-16 md:mt-20 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           {POINTS.map((point, i) => (
             <div key={i} className="about-point border-t-2 border-primary pt-6">
