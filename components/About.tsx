@@ -76,7 +76,7 @@ export default function About() {
             OpenClaw enables AI agents to reason, plan, and execute across
             systems. But autonomous action without intent verification creates
             risk. ArmorClaw captures agent intent at the reasoning layer and
-            enforces your policies before any action executes — closing the gap
+            enforces your policies before any action executes, closing the gap
             between authentication and authorization.
           </p>
         </div>

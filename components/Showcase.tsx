@@ -34,7 +34,7 @@ const BUILDERS = [
   {
     name: "Coming Soon",
     title: "Builder Spotlight #5",
-    description: "See ArmorClaw in action — real-time chain attack detection and prevention.",
+    description: "See ArmorClaw in action: real-time chain attack detection and prevention.",
     videoSrc: "", // Add video URL here e.g. "/videos/spotlight-5.mp4"
   },
 ];
@@ -77,7 +77,7 @@ export default function Showcase() {
             Built on ArmorClaw
           </h2>
           <p className="mt-4 text-lg text-secondary font-body max-w-2xl mx-auto">
-            See what teams are building with ArmorClaw and ArmorIQ — securing
+            See what teams are building with ArmorClaw and ArmorIQ. Securing
             autonomous agents at scale.
           </p>
         </div>
@@ -86,7 +86,7 @@ export default function Showcase() {
           {BUILDERS.map((builder, i) => (
             <div
               key={i}
-              className="showcase-card group flex flex-col rounded-2xl border-2 border-line overflow-hidden hover:border-secondary/30 transition-all duration-200"
+              className="showcase-card group flex flex-col w-full rounded-2xl border-2 border-line overflow-hidden hover:border-secondary/30 transition-all duration-200"
             >
               {/* Video placeholder */}
               <div className="relative aspect-video bg-gradient-to-br from-surface to-line flex items-center justify-center overflow-hidden">

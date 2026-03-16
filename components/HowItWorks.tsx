@@ -10,7 +10,7 @@ const STEPS = [
   {
     title: "Agent Reasons",
     description:
-      "Your OpenClaw agent formulates its execution plan — selecting tools, scoping data access, and preparing actions across connected systems.",
+      "Your OpenClaw agent formulates its execution plan: selecting tools, scoping data access, and preparing actions across connected systems.",
   },
   {
     title: "Intent Captured",
@@ -25,7 +25,7 @@ const STEPS = [
   {
     title: "Safe Execution",
     description:
-      "Only approved actions proceed. Violations are blocked, flagged, and logged — giving you a complete audit trail and continuous proof of control.",
+      "Only approved actions proceed. Violations are blocked, flagged, and logged. Complete audit trail and continuous proof of control.",
   },
 ];
 

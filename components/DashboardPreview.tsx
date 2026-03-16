@@ -44,28 +44,6 @@ const ALERT_COLORS: Record<string, string> = {
   notification: "#8B5CF6",
 };
 
-const DASHBOARD_FEATURES = [
-  {
-    title: "Real-Time Analytics",
-    description:
-      "Monitor active agents, MCP servers, vulnerabilities, and security scores — all at a glance.",
-  },
-  {
-    title: "Intent Plans",
-    description:
-      "Track agent execution plans in real-time with active, blocked, and planned states.",
-  },
-  {
-    title: "Policy Builder",
-    description:
-      "Visual drag-and-drop policy creation — connect agents, MCPs, users, and clients with fine-grained rules.",
-  },
-  {
-    title: "Audit Logs",
-    description:
-      "Comprehensive activity logging with severity-based classification and full audit context.",
-  },
-];
 
 export default function DashboardPreview() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -88,14 +66,7 @@ export default function DashboardPreview() {
         scrollTrigger: { trigger: ".dash-hero-img", start: "top 85%" },
       });
 
-      gsap.from(".dash-feature", {
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: { trigger: ".dash-features", start: "top 85%" },
-      });
+
     }, sectionRef);
 
     return () => ctx.revert();
@@ -383,30 +354,6 @@ export default function DashboardPreview() {
           </div>
         </div>
 
-        {/* Feature grid */}
-        <div className="dash-features mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {DASHBOARD_FEATURES.map((feature, i) => (
-            <div
-              key={i}
-              className="dash-feature rounded-2xl border-2 border-line overflow-hidden hover:border-secondary/30 transition-all duration-200"
-            >
-              {/* Screenshot placeholder */}
-              <div className="aspect-[16/10] bg-gradient-to-br from-surface to-line flex items-center justify-center">
-                <span className="text-sm text-muted font-body">
-                  Screenshot: {feature.title}
-                </span>
-              </div>
-              <div className="p-6">
-                <h3 className="text-lg font-bold font-heading">
-                  {feature.title}
-                </h3>
-                <p className="mt-2 text-secondary text-sm leading-relaxed font-body">
-                  {feature.description}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </section>
   );

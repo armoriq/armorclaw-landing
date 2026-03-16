@@ -136,6 +136,7 @@ const COMPARISON_ROWS = [
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const [loading, setLoading] = useState<string | null>(null);
+  const [showComparison, setShowComparison] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -202,7 +203,7 @@ export default function Pricing() {
     <section
       ref={sectionRef}
       id="pricing"
-      className="py-24 md:py-32 lg:py-40 px-6"
+      className="py-20 md:py-28 lg:py-32 px-6"
     >
       <div className="max-w-6xl mx-auto">
         {/* Header */}
@@ -216,11 +217,11 @@ export default function Pricing() {
         </div>
 
         {/* Cards */}
-        <div className="pricing-cards mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="pricing-cards mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
           {PLANS.map((plan, i) => (
             <div
               key={i}
-              className={`pricing-card flex flex-col p-8 md:p-10 rounded-2xl border-2 transition-shadow duration-200 hover:shadow-md ${
+              className={`pricing-card flex flex-col p-5 md:p-6 rounded-2xl border-2 transition-shadow duration-200 hover:shadow-md ${
                 plan.featured
                   ? "border-accent"
                   : "border-line hover:border-secondary/30"
@@ -228,8 +229,8 @@ export default function Pricing() {
             >
               <div>
                 <h3 className="text-xl font-bold font-heading">{plan.name}</h3>
-                <div className="mt-4 flex items-baseline gap-1">
-                  <span className="text-4xl md:text-5xl font-bold font-heading">
+                <div className="mt-2 flex items-baseline gap-1">
+                  <span className="text-3xl md:text-4xl font-bold font-heading">
                     {plan.price}
                   </span>
                   {plan.period && (
@@ -238,18 +239,18 @@ export default function Pricing() {
                     </span>
                   )}
                 </div>
-                <p className="mt-4 text-secondary font-body leading-relaxed">
+                <p className="mt-2 text-sm text-secondary font-body leading-relaxed">
                   {plan.description}
                 </p>
               </div>
 
-              <ul className="mt-8 space-y-3 flex-1">
+              <ul className="mt-4 space-y-1.5 flex-1">
                 {plan.features.map((feature, j) => (
                   <li
                     key={j}
-                    className="flex items-start gap-3 font-body text-secondary"
+                    className="flex items-start gap-2 font-body text-secondary text-sm"
                   >
-                    <span className="text-accent shrink-0 mt-0.5 font-bold">
+                    <span className="text-accent shrink-0 mt-0.5 text-xs font-bold">
                       —
                     </span>
                     <span>{feature}</span>
@@ -260,7 +261,7 @@ export default function Pricing() {
               <button
                 onClick={() => handleCheckout(plan.tier)}
                 disabled={loading === plan.tier}
-                className={`mt-8 block w-full text-center py-3.5 rounded-full font-medium font-body transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-wait ${
+                className={`mt-5 block w-full text-center py-2.5 rounded-full text-sm font-medium font-body transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-wait ${
                   plan.featured
                     ? "bg-accent text-white hover:bg-accent-hover"
                     : "border-2 border-primary text-primary hover:bg-primary hover:text-white"
@@ -272,53 +273,70 @@ export default function Pricing() {
           ))}
         </div>
 
-        {/* Feature Comparison Table */}
-        <div className="comparison-table mt-20 md:mt-28">
-          <h3 className="text-2xl md:text-3xl font-bold font-heading text-center mb-10">
-            Compare All Features
-          </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left font-body border-collapse">
-              <thead>
-                <tr className="border-b-2 border-primary">
-                  <th className="py-4 pr-4 text-sm font-bold text-primary uppercase tracking-wider">
-                    Feature
-                  </th>
-                  <th className="py-4 px-4 text-sm font-bold text-primary uppercase tracking-wider text-center">
-                    Starter
-                  </th>
-                  <th className="py-4 px-4 text-sm font-bold text-accent uppercase tracking-wider text-center">
-                    Pro
-                  </th>
-                  <th className="py-4 pl-4 text-sm font-bold text-primary uppercase tracking-wider text-center">
-                    Enterprise
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {COMPARISON_ROWS.map((row, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-line last:border-b-0"
-                  >
-                    <td className="py-4 pr-4 text-primary font-medium">
-                      {row.feature}
-                    </td>
-                    <td className="py-4 px-4 text-secondary text-center">
-                      {row.free}
-                    </td>
-                    <td className="py-4 px-4 text-secondary text-center">
-                      {row.pro}
-                    </td>
-                    <td className="py-4 pl-4 text-secondary text-center">
-                      {row.enterprise}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Feature Comparison Toggle */}
+        <div className="mt-14 text-center">
+          <button
+            onClick={() => setShowComparison((prev) => !prev)}
+            className="inline-flex items-center gap-2 text-accent font-medium font-body hover:underline cursor-pointer"
+          >
+            {showComparison ? "Hide" : "Compare All Features"}
+            <svg
+              className={`w-4 h-4 transition-transform duration-200 ${showComparison ? "rotate-180" : ""}`}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
         </div>
+
+        {showComparison && (
+          <div className="comparison-table mt-8">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left font-body border-collapse">
+                <thead>
+                  <tr className="border-b-2 border-primary">
+                    <th className="py-3 pr-4 text-sm font-bold text-primary uppercase tracking-wider">
+                      Feature
+                    </th>
+                    <th className="py-3 px-4 text-sm font-bold text-primary uppercase tracking-wider text-center">
+                      Starter
+                    </th>
+                    <th className="py-3 px-4 text-sm font-bold text-accent uppercase tracking-wider text-center">
+                      Pro
+                    </th>
+                    <th className="py-3 pl-4 text-sm font-bold text-primary uppercase tracking-wider text-center">
+                      Enterprise
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {COMPARISON_ROWS.map((row, i) => (
+                    <tr
+                      key={i}
+                      className="border-b border-line last:border-b-0"
+                    >
+                      <td className="py-3 pr-4 text-primary font-medium">
+                        {row.feature}
+                      </td>
+                      <td className="py-3 px-4 text-secondary text-center">
+                        {row.free}
+                      </td>
+                      <td className="py-3 px-4 text-secondary text-center">
+                        {row.pro}
+                      </td>
+                      <td className="py-3 pl-4 text-secondary text-center">
+                        {row.enterprise}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
