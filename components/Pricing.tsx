@@ -15,10 +15,11 @@ const PLANS = [
       "Get started with ArmorClaw. Perfect for exploring intent assurance on personal projects.",
     features: [
       "Up to 5 agents",
+      "30 intent calls / day",
       "Basic intent logging",
-      "Community support",
+      "Basic audit logs",
       "7-day log retention",
-      "Standard policies",
+      "Community support",
     ],
     cta: "Get Started Free",
     featured: false,
@@ -32,13 +33,15 @@ const PLANS = [
       "Full intent assurance for production agent workloads with custom policy control.",
     features: [
       "Up to 100 agents",
+      "Unlimited intent calls",
       "Full intent assurance",
       "Custom policy engine",
-      "Priority support",
-      "90-day log retention",
+      "YAML policy support",
       "Advanced audit trails",
+      "90-day log retention",
+      "Priority support",
     ],
-    cta: "Start Trial",
+    cta: "Upgrade to Pro",
     featured: true,
     tier: "pro",
   },
@@ -50,10 +53,12 @@ const PLANS = [
       "Dedicated infrastructure, compliance, and support tailored to your organization.",
     features: [
       "Unlimited agents",
+      "Unlimited intent calls",
+      "Full audit trails + compliance export",
+      "YAML policy support",
+      "Custom log retention",
       "Dedicated support and SLA",
-      "Compliance reporting",
       "SSO and SAML",
-      "Custom integrations",
       "On-premise available",
     ],
     cta: "Contact Sales",
@@ -64,6 +69,7 @@ const PLANS = [
 
 const COMPARISON_ROWS = [
   { feature: "Agents", free: "5", pro: "100", enterprise: "Unlimited" },
+  { feature: "Intent Calls", free: "30 / day", pro: "Unlimited", enterprise: "Unlimited" },
   { feature: "Intent Logging", free: "Basic", pro: "Full", enterprise: "Full" },
   {
     feature: "Intent Assurance",
@@ -78,6 +84,12 @@ const COMPARISON_ROWS = [
     enterprise: "Included",
   },
   {
+    feature: "YAML Policy Support",
+    free: "—",
+    pro: "Included",
+    enterprise: "Included",
+  },
+  {
     feature: "Log Retention",
     free: "7 days",
     pro: "90 days",
@@ -85,9 +97,9 @@ const COMPARISON_ROWS = [
   },
   {
     feature: "Audit Trails",
-    free: "—",
-    pro: "Included",
-    enterprise: "Included",
+    free: "Basic logs",
+    pro: "Advanced",
+    enterprise: "Full + compliance export",
   },
   {
     feature: "Support",

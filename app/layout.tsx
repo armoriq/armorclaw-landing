@@ -7,6 +7,7 @@ const sunflower = Sunflower({
   subsets: ["latin"],
   variable: "--font-sunflower",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const inter = Inter({

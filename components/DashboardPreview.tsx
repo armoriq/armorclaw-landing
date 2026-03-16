@@ -6,30 +6,64 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const METRIC_CARDS = [
+  { label: "Total MCP Servers", value: "12", subtitle: "Active servers", bg: "#F9EDDA" },
+  { label: "Total AI Agents", value: "47", subtitle: "Connected and reporting", bg: "#F9DBDB" },
+  { label: "High Severity Vulns", value: "3", subtitle: "Critical & High", bg: "#C6E7EE" },
+  { label: "Chain Attacks", value: "1", subtitle: "Total detected", bg: "#F3DDD3" },
+  { label: "Compliance Score", value: "92%", subtitle: "Target: 95%", bg: "#E1EAD6" },
+  { label: "Active Certificates", value: "8", subtitle: "MCP servers & agents", bg: "#DDDAEE" },
+];
+
+const SIDEBAR_ITEMS = [
+  "Dashboard",
+  "Agents",
+  "MCP Server",
+  "Intent Intelligence",
+  "API Dashboard",
+  "Quick Scan",
+  "ArmorClaw",
+  "Policies",
+  "Audit & Logs",
+  "Settings",
+];
+
+const CHART_DATA = [10, 25, 18, 42, 35, 55, 48, 62, 58, 70, 65, 72, 68, 75];
+
+const ALERTS = [
+  { type: "warning", text: "Agent 'data-sync' exceeded token limit" },
+  { type: "error", text: "Chain attack detected on MCP-prod-03" },
+  { type: "info", text: "New policy deployed: strict-access-v2" },
+  { type: "notification", text: "Certificate expiring in 7 days" },
+];
+
+const ALERT_COLORS: Record<string, string> = {
+  warning: "#F59E0B",
+  error: "#EF4444",
+  info: "#3B82F6",
+  notification: "#8B5CF6",
+};
+
 const DASHBOARD_FEATURES = [
   {
     title: "Real-Time Analytics",
     description:
       "Monitor active agents, MCP servers, vulnerabilities, and security scores — all at a glance.",
-    placeholder: "dashboard-analytics",
   },
   {
     title: "Intent Plans",
     description:
       "Track agent execution plans in real-time with active, blocked, and planned states.",
-    placeholder: "intent-plans",
   },
   {
     title: "Policy Builder",
     description:
       "Visual drag-and-drop policy creation — connect agents, MCPs, users, and clients with fine-grained rules.",
-    placeholder: "policy-builder",
   },
   {
     title: "Audit Logs",
     description:
       "Comprehensive activity logging with severity-based classification and full audit context.",
-    placeholder: "audit-logs",
   },
 ];
 
@@ -84,85 +118,267 @@ export default function DashboardPreview() {
           </p>
         </div>
 
-        {/* Hero dashboard screenshot placeholder */}
+        {/* Hero dashboard mock — matches real ArmorIQ dashboard */}
         <div className="dash-hero-img mt-16 rounded-2xl border-2 border-line overflow-hidden shadow-lg">
-          <div className="relative aspect-[16/9] bg-gradient-to-br from-primary/[0.03] to-accent/[0.06] flex items-center justify-center">
-            {/* Mock dashboard UI */}
-            <div className="w-full h-full p-4 md:p-8">
-              {/* Top bar */}
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-lg bg-accent/20" />
-                  <div className="h-3 w-32 bg-primary/10 rounded" />
+          <div className="relative bg-[#F8F9FB]">
+            <div className="flex">
+              {/* Sidebar */}
+              <div className="hidden md:flex flex-col w-[180px] lg:w-[200px] bg-[#F2F7FF] border-r border-line shrink-0">
+                {/* Logo area */}
+                <div className="px-4 py-4 border-b border-line/60">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-lg bg-accent/20 flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-sm bg-accent/60" />
+                    </div>
+                    <span className="text-sm font-bold font-heading text-primary">ArmorIQ</span>
+                  </div>
                 </div>
-                <div className="flex gap-2">
-                  <div className="h-3 w-16 bg-primary/10 rounded" />
-                  <div className="h-3 w-16 bg-primary/10 rounded" />
+                {/* Nav items */}
+                <div className="flex flex-col py-2 px-2 gap-0.5">
+                  {SIDEBAR_ITEMS.map((item, i) => (
+                    <div
+                      key={i}
+                      className={`px-3 py-2 rounded-lg text-xs font-body flex items-center gap-2 ${
+                        i === 0
+                          ? "bg-white text-primary font-semibold shadow-sm border border-line/40"
+                          : "text-secondary hover:bg-white/50"
+                      }`}
+                    >
+                      <div
+                        className={`w-4 h-4 rounded ${
+                          i === 0 ? "bg-accent/30" : "bg-primary/10"
+                        }`}
+                      />
+                      {item}
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              {/* KPI Cards */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
-                {[
-                  { label: "Active Agents", value: "47", color: "bg-blue-500/15" },
-                  { label: "MCP Servers", value: "12", color: "bg-green-500/15" },
-                  { label: "Security Score", value: "94%", color: "bg-accent/15" },
-                  { label: "Policy Violations", value: "3", color: "bg-red-500/15" },
-                ].map((card, i) => (
-                  <div
-                    key={i}
-                    className={`${card.color} rounded-xl p-3 md:p-4`}
-                  >
-                    <div className="text-xs text-secondary font-body">
-                      {card.label}
+              {/* Main content */}
+              <div className="flex-1 min-w-0">
+                {/* Top bar */}
+                <div className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-line/60 bg-white">
+                  <div>
+                    <div className="text-sm font-bold font-heading text-primary">
+                      Agent and MCP Security Dashboard
                     </div>
-                    <div className="mt-1 text-xl md:text-2xl font-bold font-heading">
-                      {card.value}
+                    <div className="text-[10px] text-muted font-body">
+                      Welcome to ArmorIQ - Agent Security Dashboard
                     </div>
                   </div>
-                ))}
-              </div>
-
-              {/* Chart placeholder */}
-              <div className="flex gap-4 flex-1">
-                <div className="flex-1 rounded-xl bg-white/60 border border-line p-4">
-                  <div className="h-3 w-24 bg-primary/10 rounded mb-4" />
-                  <div className="flex items-end gap-1 h-20 md:h-32">
-                    {[40, 65, 45, 80, 55, 70, 90, 60, 75, 85, 50, 95].map(
-                      (h, i) => (
-                        <div
-                          key={i}
-                          className="flex-1 bg-accent/20 rounded-t"
-                          style={{ height: `${h}%` }}
-                        />
-                      )
-                    )}
+                  <div className="flex items-center gap-3">
+                    <div className="w-6 h-6 rounded-full bg-primary/5 border border-line flex items-center justify-center">
+                      <div className="w-2.5 h-2.5 rounded-full bg-primary/20" />
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-6 h-6 rounded-full bg-accent/15" />
+                      <div className="h-2 w-12 bg-primary/10 rounded hidden sm:block" />
+                    </div>
                   </div>
                 </div>
-                <div className="hidden md:flex flex-col gap-3 w-48">
-                  {["Intent Plans", "Active Policies", "Recent Scans"].map(
-                    (item, i) => (
+
+                {/* Dashboard body */}
+                <div className="p-3 md:p-5">
+                  {/* 6 Metric Cards */}
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 md:gap-3 mb-4">
+                    {METRIC_CARDS.map((card, i) => (
                       <div
                         key={i}
-                        className="rounded-xl bg-white/60 border border-line p-3 flex-1"
+                        className="rounded-xl p-2.5 md:p-3"
+                        style={{ backgroundColor: card.bg }}
                       >
-                        <div className="h-2 w-16 bg-primary/10 rounded mb-2" />
-                        <div className="h-3 w-10 bg-accent/20 rounded" />
-                        <div className="text-[10px] text-muted mt-1 font-body">
-                          {item}
+                        <div className="text-[9px] md:text-[10px] text-secondary font-body leading-tight">
+                          {card.label}
+                        </div>
+                        <div className="mt-1 text-lg md:text-xl font-bold font-heading text-primary">
+                          {card.value}
+                        </div>
+                        <div className="text-[8px] text-muted font-body">
+                          {card.subtitle}
                         </div>
                       </div>
-                    )
-                  )}
+                    ))}
+                  </div>
+
+                  {/* Charts row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 mb-4">
+                    {/* Risk Score Analysis - Area Chart */}
+                    <div className="lg:col-span-2 bg-white rounded-xl p-3 md:p-4 border border-line/60">
+                      <div className="flex justify-between items-center mb-3">
+                        <span className="text-xs font-bold font-heading text-primary">
+                          Risk Score Analysis
+                        </span>
+                        <div className="flex gap-1">
+                          {["7d", "30d", "90d"].map((p, i) => (
+                            <span
+                              key={i}
+                              className={`text-[9px] px-2 py-0.5 rounded font-body ${
+                                i === 1
+                                  ? "bg-accent text-white"
+                                  : "bg-gray-100 text-secondary"
+                              }`}
+                            >
+                              {p}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                      {/* Area chart mock */}
+                      <div className="relative h-24 md:h-36">
+                        <svg
+                          viewBox="0 0 280 100"
+                          className="w-full h-full"
+                          preserveAspectRatio="none"
+                        >
+                          <defs>
+                            <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
+                              <stop offset="0%" stopColor="#D97D55" stopOpacity="0.3" />
+                              <stop offset="100%" stopColor="#D97D55" stopOpacity="0" />
+                            </linearGradient>
+                          </defs>
+                          {/* Grid lines */}
+                          {[20, 40, 60, 80].map((y) => (
+                            <line
+                              key={y}
+                              x1="0"
+                              y1={y}
+                              x2="280"
+                              y2={y}
+                              stroke="#E5E7EB"
+                              strokeWidth="0.5"
+                              strokeDasharray="4 2"
+                            />
+                          ))}
+                          {/* Area fill */}
+                          <path
+                            d={`M0,${100 - CHART_DATA[0]} ${CHART_DATA.map(
+                              (v, i) => `L${(i * 280) / (CHART_DATA.length - 1)},${100 - v}`
+                            ).join(" ")} L280,100 L0,100 Z`}
+                            fill="url(#chartFill)"
+                          />
+                          {/* Line */}
+                          <path
+                            d={`M0,${100 - CHART_DATA[0]} ${CHART_DATA.map(
+                              (v, i) => `L${(i * 280) / (CHART_DATA.length - 1)},${100 - v}`
+                            ).join(" ")}`}
+                            fill="none"
+                            stroke="#D97D55"
+                            strokeWidth="2"
+                          />
+                          {/* Data points */}
+                          {CHART_DATA.map((v, i) => (
+                            <circle
+                              key={i}
+                              cx={(i * 280) / (CHART_DATA.length - 1)}
+                              cy={100 - v}
+                              r="2"
+                              fill="#D97D55"
+                            />
+                          ))}
+                        </svg>
+                      </div>
+                    </div>
+
+                    {/* Alerts panel */}
+                    <div className="bg-white rounded-xl p-3 md:p-4 border border-line/60">
+                      <span className="text-xs font-bold font-heading text-primary">
+                        Recent Alerts
+                      </span>
+                      <div className="mt-3 flex flex-col gap-2">
+                        {ALERTS.map((alert, i) => (
+                          <div
+                            key={i}
+                            className="flex items-start gap-2 p-2 rounded-lg bg-gray-50"
+                          >
+                            <div
+                              className="w-2 h-2 rounded-full mt-1 shrink-0"
+                              style={{ backgroundColor: ALERT_COLORS[alert.type] }}
+                            />
+                            <div>
+                              <span className="text-[9px] md:text-[10px] text-primary font-body leading-tight block">
+                                {alert.text}
+                              </span>
+                              <span className="text-[8px] text-muted font-body">2h ago</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Distribution & Activity row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                    {/* Agent Distribution */}
+                    <div className="bg-white rounded-xl p-3 md:p-4 border border-line/60">
+                      <span className="text-xs font-bold font-heading text-primary">
+                        Agent / Server Distribution
+                      </span>
+                      <div className="mt-3 flex items-end gap-1.5 h-16 md:h-20">
+                        {[
+                          { s: 3, a: 8 },
+                          { s: 5, a: 12 },
+                          { s: 4, a: 15 },
+                          { s: 7, a: 20 },
+                          { s: 6, a: 25 },
+                          { s: 8, a: 32 },
+                          { s: 10, a: 40 },
+                          { s: 12, a: 47 },
+                        ].map((d, i) => (
+                          <div key={i} className="flex-1 flex flex-col gap-0.5 items-stretch">
+                            <div
+                              className="bg-accent/30 rounded-t"
+                              style={{ height: `${d.a}%` }}
+                            />
+                            <div
+                              className="bg-blue-400/30 rounded-t"
+                              style={{ height: `${d.s * 2}%` }}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-2 flex gap-3">
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-sm bg-accent/30" />
+                          <span className="text-[8px] text-muted font-body">Agents</span>
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <div className="w-2 h-2 rounded-sm bg-blue-400/30" />
+                          <span className="text-[8px] text-muted font-body">Servers</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Activity Log */}
+                    <div className="bg-white rounded-xl p-3 md:p-4 border border-line/60">
+                      <span className="text-xs font-bold font-heading text-primary">
+                        Activity Log
+                      </span>
+                      <div className="mt-3 flex flex-col gap-1.5">
+                        {[
+                          "Agent 'data-sync' registered successfully",
+                          "Policy 'strict-access-v2' deployed",
+                          "MCP server 'prod-03' scan completed",
+                          "Certificate renewed for agent-auth-01",
+                          "New team member onboarded",
+                        ].map((msg, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center justify-between py-1.5 border-b border-line/30 last:border-0"
+                          >
+                            <span className="text-[9px] md:text-[10px] text-primary font-body">
+                              {msg}
+                            </span>
+                            <span className="text-[8px] text-muted font-body shrink-0 ml-2">
+                              {i === 0 ? "just now" : `${i * 2}h ago`}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-
-            {/* Overlay text */}
-            <div className="absolute inset-0 flex items-center justify-center bg-primary/[0.02]">
-              <span className="px-6 py-3 bg-white/90 border border-line rounded-full text-sm font-medium font-body text-secondary shadow-sm">
-                Add your dashboard screenshot here
-              </span>
             </div>
           </div>
         </div>

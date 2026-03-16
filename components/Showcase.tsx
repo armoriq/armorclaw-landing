@@ -11,16 +11,31 @@ const BUILDERS = [
     name: "Coming Soon",
     title: "Builder Spotlight #1",
     description: "See how teams are using ArmorClaw to secure their OpenClaw agent deployments.",
+    videoSrc: "", // Add video URL here e.g. "/videos/spotlight-1.mp4"
   },
   {
     name: "Coming Soon",
     title: "Builder Spotlight #2",
     description: "Watch real-world use cases of intent assurance in production environments.",
+    videoSrc: "", // Add video URL here e.g. "/videos/spotlight-2.mp4"
   },
   {
     name: "Coming Soon",
     title: "Builder Spotlight #3",
     description: "Learn how ArmorClaw integrates into existing agent workflows.",
+    videoSrc: "", // Add video URL here e.g. "/videos/spotlight-3.mp4"
+  },
+  {
+    name: "Coming Soon",
+    title: "Builder Spotlight #4",
+    description: "Discover how ArmorClaw enforces policy compliance across multi-agent architectures.",
+    videoSrc: "", // Add video URL here e.g. "/videos/spotlight-4.mp4"
+  },
+  {
+    name: "Coming Soon",
+    title: "Builder Spotlight #5",
+    description: "See ArmorClaw in action — real-time chain attack detection and prevention.",
+    videoSrc: "", // Add video URL here e.g. "/videos/spotlight-5.mp4"
   },
 ];
 
@@ -67,28 +82,41 @@ export default function Showcase() {
           </p>
         </div>
 
-        <div className="showcase-cards mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="showcase-cards mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 justify-items-center">
           {BUILDERS.map((builder, i) => (
             <div
               key={i}
               className="showcase-card group flex flex-col rounded-2xl border-2 border-line overflow-hidden hover:border-secondary/30 transition-all duration-200"
             >
               {/* Video placeholder */}
-              <div className="relative aspect-video bg-gradient-to-br from-surface to-line flex items-center justify-center">
-                <div className="flex flex-col items-center gap-3">
-                  <div className="w-16 h-16 rounded-full border-2 border-accent/30 flex items-center justify-center group-hover:border-accent transition-colors duration-200">
-                    <svg
-                      className="w-6 h-6 text-accent/50 group-hover:text-accent transition-colors duration-200 ml-1"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
+              <div className="relative aspect-video bg-gradient-to-br from-surface to-line flex items-center justify-center overflow-hidden">
+                {builder.videoSrc ? (
+                  <video
+                    className="w-full h-full object-cover"
+                    src={builder.videoSrc}
+                    controls
+                    preload="metadata"
+                    playsInline
+                    muted
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                ) : (
+                  <div className="flex flex-col items-center gap-3">
+                    <div className="w-16 h-16 rounded-full border-2 border-accent/30 flex items-center justify-center group-hover:border-accent transition-colors duration-200">
+                      <svg
+                        className="w-6 h-6 text-accent/50 group-hover:text-accent transition-colors duration-200 ml-1"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </div>
+                    <span className="text-sm text-muted font-body">
+                      Video coming soon
+                    </span>
                   </div>
-                  <span className="text-sm text-muted font-body">
-                    Video coming soon
-                  </span>
-                </div>
+                )}
               </div>
 
               <div className="p-6">
