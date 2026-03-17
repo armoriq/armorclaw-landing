@@ -1,11 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
 const BUILDERS = [
   {
     name: "Coming Soon",
@@ -40,34 +34,8 @@ const BUILDERS = [
 ];
 
 export default function Showcase() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".showcase-header", {
-        y: 18,
-        opacity: 0,
-        duration: 0.5,
-        ease: "power2.out",
-        scrollTrigger: { trigger: ".showcase-header", start: "top 88%" },
-      });
-
-      gsap.from(".showcase-card", {
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        stagger: 0.1,
-        ease: "power2.out",
-        scrollTrigger: { trigger: ".showcase-cards", start: "top 85%" },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
     <section
-      ref={sectionRef}
       id="showcase"
       className="py-24 md:py-32 lg:py-40 px-6"
     >
