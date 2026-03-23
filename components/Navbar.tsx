@@ -34,10 +34,11 @@ export default function Navbar() {
           className="flex items-center gap-2 select-none"
         >
           <img
-            src="/images/logo.svg"
+            src="/images/logo.jpeg"
             alt="ArmorIQ"
-            className="h-7"
+            className="h-8 w-8 rounded-full object-cover"
           />
+          <span className="text-lg font-heading font-bold text-primary">ArmorClaw</span>
         </a>
 
         {/* Desktop links */}

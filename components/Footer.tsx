@@ -4,9 +4,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-6">
           <img
-            src="/images/logo.svg"
+            src="/images/logo.jpeg"
             alt="ArmorIQ"
-            className="h-6"
+            className="h-7 w-7 rounded-full object-cover"
           />
           <span className="text-sm text-muted font-body">
             ArmorClaw by ArmorIQ
