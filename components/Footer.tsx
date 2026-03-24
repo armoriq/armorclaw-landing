@@ -3,11 +3,13 @@ export default function Footer() {
     <footer className="py-12 px-6 border-t border-line">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
         <div className="flex items-center gap-6">
-          <span className="text-lg font-bold font-heading text-primary">
-            Armor<span className="text-accent">Claw</span>
-          </span>
+          <img
+            src="/images/logo.jpeg"
+            alt="ArmorIQ"
+            className="h-7 w-7 rounded-full object-cover"
+          />
           <span className="text-sm text-muted font-body">
-            by ArmorIQ
+            ArmorClaw by ArmorIQ
           </span>
         </div>
 

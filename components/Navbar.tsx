@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Dashboard", href: "#dashboard" },
   { label: "Pricing", href: "#pricing" },
 ];
 
@@ -30,9 +31,14 @@ export default function Navbar() {
         {/* Logo */}
         <a
           href="#"
-          className="text-xl font-bold font-heading text-primary select-none"
+          className="flex items-center gap-2 select-none"
         >
-          Armor<span className="text-accent">Claw</span>
+          <img
+            src="/images/logo.jpeg"
+            alt="ArmorIQ"
+            className="h-8 w-8 rounded-full object-cover"
+          />
+          <span className="text-lg font-heading font-bold text-primary">ArmorClaw</span>
         </a>
 
         {/* Desktop links */}
@@ -49,12 +55,22 @@ export default function Navbar() {
         </div>
 
         {/* CTA */}
-        <a
-          href="#pricing"
-          className="hidden sm:inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
-        >
-          Get Started
-        </a>
+        <div className="hidden sm:flex items-center gap-3">
+          <a
+            href="https://docs-openclaw.armoriq.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex px-5 py-2 border-2 border-primary text-primary text-sm font-medium rounded-full hover:bg-primary hover:text-white transition-colors duration-200"
+          >
+            Docs
+          </a>
+          <a
+            href="#pricing"
+            className="inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
+          >
+            Get Started
+          </a>
+        </div>
 
         {/* Mobile hamburger */}
         <button
@@ -97,6 +113,15 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <a
+            href="https://docs-openclaw.armoriq.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setMenuOpen(false)}
+            className="inline-flex justify-center px-6 py-2 border-2 border-primary text-primary text-sm font-medium rounded-full hover:bg-primary hover:text-white transition-colors"
+          >
+            Docs
+          </a>
           <a
             href="#pricing"
             onClick={() => setMenuOpen(false)}

@@ -7,6 +7,7 @@ const sunflower = Sunflower({
   subsets: ["latin"],
   variable: "--font-sunflower",
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const inter = Inter({
@@ -16,9 +17,13 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "ArmorClaw — Intent Assurance for OpenClaw Agents",
+  title: "ArmorClaw | Intent Assurance for OpenClaw Agents",
   description:
     "Verify every agent action against approved intent before execution. No silent drift. No unauthorized outcomes.",
+  icons: {
+    icon: "/images/logo.jpeg",
+    apple: "/images/logo.jpeg",
+  },
 };
 
 export default function RootLayout({
