@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 const NAV_LINKS = [
   { label: "About", href: "#about" },
   { label: "How It Works", href: "#how-it-works" },
-  { label: "Dashboard", href: "#dashboard" },
+
   { label: "Pricing", href: "#pricing" },
 ];
 
@@ -65,7 +65,7 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="#pricing"
+            href="https://dev.armoriq.io/auth"
             className="inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
           >
             Get Started
@@ -123,7 +123,7 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="#pricing"
+            href="https://dev.armoriq.io/auth"
             onClick={() => setMenuOpen(false)}
             className="inline-flex justify-center px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors sm:hidden"
           >

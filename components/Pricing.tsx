@@ -175,7 +175,7 @@ export default function Pricing() {
       return;
     }
     if (tier === "enterprise") {
-      window.location.href = "mailto:sales@armoriq.ai?subject=Enterprise%20Plan%20Inquiry";
+      window.open("https://mail.google.com/mail/?view=cm&to=support@armoriq.io&bcc=fuzail@armoriq.io,ram@armoriq.io,raj@armoriq.io&su=Enterprise%20Plan%20Inquiry", "_blank");
       return;
     }
 

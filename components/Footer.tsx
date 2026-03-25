@@ -33,7 +33,9 @@ export default function Footer() {
             Documentation
           </a>
           <a
-            href="#"
+            href="https://mail.google.com/mail/?view=cm&to=support@armoriq.io&bcc=fuzail@armoriq.io,ram@armoriq.io,raj@armoriq.io&su=ArmorClaw%20Inquiry"
+            target="_blank"
+            rel="noopener noreferrer"
             className="hover:text-primary transition-colors duration-200"
           >
             Contact
