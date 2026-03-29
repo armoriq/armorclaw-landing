@@ -65,7 +65,13 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="https://dev.armoriq.io/auth"
+            href="http://localhost:5174/auth"
+            className="inline-flex px-5 py-2 text-primary text-sm font-medium hover:text-accent transition-colors duration-200"
+          >
+            Login
+          </a>
+          <a
+            href="http://localhost:5174/auth"
             className="inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
           >
             Get Started
@@ -123,7 +129,14 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="https://dev.armoriq.io/auth"
+            href="http://localhost:5174/auth"
+            onClick={() => setMenuOpen(false)}
+            className="inline-flex justify-center px-6 py-2 text-primary text-sm font-medium hover:text-accent transition-colors sm:hidden"
+          >
+            Login
+          </a>
+          <a
+            href="http://localhost:5174/auth"
             onClick={() => setMenuOpen(false)}
             className="inline-flex justify-center px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors sm:hidden"
           >

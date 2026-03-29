@@ -169,33 +169,18 @@ export default function Pricing() {
     return () => ctx.revert();
   }, []);
 
-  async function handleCheckout(tier: string) {
-    if (tier === "free") {
-      window.location.href = "/checkout/success?plan=free";
-      return;
-    }
+  function handleCheckout(tier: string) {
     if (tier === "enterprise") {
       window.open("https://mail.google.com/mail/?view=cm&to=support@armoriq.io&bcc=fuzail@armoriq.io,ram@armoriq.io,raj@armoriq.io&su=Enterprise%20Plan%20Inquiry", "_blank");
       return;
     }
 
-    setLoading(tier);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        console.error("Checkout error:", data.error);
-        setLoading(null);
-      }
-    } catch {
-      console.error("Checkout failed");
-      setLoading(null);
+    // Free & Pro both go to auth → dashboard handles billing
+    const dashboardUrl = "http://localhost:5174";
+    if (tier === "pro") {
+      window.location.href = `${dashboardUrl}/auth?plan=pro`;
+    } else {
+      window.location.href = `${dashboardUrl}/auth`;
     }
   }
 
