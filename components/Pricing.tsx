@@ -10,7 +10,8 @@ const PLANS = [
   {
     name: "Free",
     price: "$0",
-    period: "/mo",
+    period: "/month",
+    annualNote: "",
     description:
       "Get started with ArmorClaw. Perfect for exploring intent assurance on personal projects.",
     features: [
@@ -27,13 +28,16 @@ const PLANS = [
   },
   {
     name: "Pro",
-    price: "$19",
-    period: "/mo",
+    badge: "Recommended",
+    price: "$200",
+    period: "/year",
+    annualNote: "$16.67/mo — save $40/year",
     description:
       "Full intent assurance for production agent workloads with custom policy control.",
     features: [
-      "Up to 100 agents",
-      "Unlimited intent calls",
+      "Unlimited agents",
+      "100 free intent calls / day",
+      "Overage: $1 per 100 extra calls",
       "Full intent assurance",
       "Custom policy engine",
       "YAML policy support",
@@ -49,13 +53,13 @@ const PLANS = [
     name: "Enterprise",
     price: "Custom",
     period: "",
+    annualNote: "",
     description:
       "Dedicated infrastructure, compliance, and support tailored to your organization.",
     features: [
       "Unlimited agents",
       "Unlimited intent calls",
       "Full audit trails + compliance export",
-      "YAML policy support",
       "Custom log retention",
       "Dedicated support and SLA",
       "SSO and SAML",
@@ -68,8 +72,13 @@ const PLANS = [
 ];
 
 const COMPARISON_ROWS = [
-  { feature: "Agents", free: "5", pro: "100", enterprise: "Unlimited" },
-  { feature: "Intent Calls", free: "30 / day", pro: "Unlimited", enterprise: "Unlimited" },
+  { feature: "Agents", free: "5", pro: "Unlimited", enterprise: "Unlimited" },
+  {
+    feature: "Intent Calls",
+    free: "30 / day",
+    pro: "100 / day + overage",
+    enterprise: "Unlimited",
+  },
   { feature: "Intent Logging", free: "Basic", pro: "Full", enterprise: "Full" },
   {
     feature: "Intent Assurance",
@@ -87,7 +96,7 @@ const COMPARISON_ROWS = [
     feature: "YAML Policy Support",
     free: "—",
     pro: "Included",
-    enterprise: "Included",
+    enterprise: "—",
   },
   {
     feature: "Log Retention",
@@ -135,7 +144,6 @@ const COMPARISON_ROWS = [
 
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [loading, setLoading] = useState<string | null>(null);
   const [showComparison, setShowComparison] = useState(false);
 
   useEffect(() => {
@@ -169,36 +177,6 @@ export default function Pricing() {
     return () => ctx.revert();
   }, []);
 
-  async function handleCheckout(tier: string) {
-    if (tier === "free") {
-      window.location.href = "/checkout/success?plan=free";
-      return;
-    }
-    if (tier === "enterprise") {
-      window.location.href = "mailto:sales@armoriq.ai?subject=Enterprise%20Plan%20Inquiry";
-      return;
-    }
-
-    setLoading(tier);
-    try {
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ tier }),
-      });
-      const data = await res.json();
-      if (data.url) {
-        window.location.href = data.url;
-      } else {
-        console.error("Checkout error:", data.error);
-        setLoading(null);
-      }
-    } catch {
-      console.error("Checkout failed");
-      setLoading(null);
-    }
-  }
-
   return (
     <section
       ref={sectionRef}
@@ -228,7 +206,16 @@ export default function Pricing() {
               }`}
             >
               <div>
-                <h3 className="text-xl font-bold font-heading">{plan.name}</h3>
+                <div className="flex items-center gap-2">
+                  <h3 className="text-xl font-bold font-heading">
+                    {plan.name}
+                  </h3>
+                  {"badge" in plan && plan.badge && (
+                    <span className="text-[10px] font-bold uppercase tracking-wider bg-accent text-white px-2 py-0.5 rounded-full">
+                      {plan.badge}
+                    </span>
+                  )}
+                </div>
                 <div className="mt-2 flex items-baseline gap-1">
                   <span className="text-3xl md:text-4xl font-bold font-heading">
                     {plan.price}
@@ -239,6 +226,11 @@ export default function Pricing() {
                     </span>
                   )}
                 </div>
+                {plan.annualNote && (
+                  <p className="mt-1 text-xs text-accent font-medium font-body">
+                    {plan.annualNote}
+                  </p>
+                )}
                 <p className="mt-2 text-sm text-secondary font-body leading-relaxed">
                   {plan.description}
                 </p>
@@ -259,15 +251,14 @@ export default function Pricing() {
               </ul>
 
               <button
-                onClick={() => handleCheckout(plan.tier)}
-                disabled={loading === plan.tier}
-                className={`mt-5 block w-full text-center py-2.5 rounded-full text-sm font-medium font-body transition-colors duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-wait ${
+                onClick={() => {}}
+                className={`mt-5 block w-full text-center py-2.5 rounded-full text-sm font-medium font-body transition-colors duration-200 cursor-pointer ${
                   plan.featured
                     ? "bg-accent text-white hover:bg-accent-hover"
                     : "border-2 border-primary text-primary hover:bg-primary hover:text-white"
                 }`}
               >
-                {loading === plan.tier ? "Redirecting..." : plan.cta}
+                {plan.cta}
               </button>
             </div>
           ))}
@@ -287,7 +278,11 @@ export default function Pricing() {
               stroke="currentColor"
               strokeWidth={2}
             >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </button>
         </div>
@@ -302,7 +297,7 @@ export default function Pricing() {
                       Feature
                     </th>
                     <th className="py-3 px-4 text-sm font-bold text-primary uppercase tracking-wider text-center">
-                      Starter
+                      Free
                     </th>
                     <th className="py-3 px-4 text-sm font-bold text-accent uppercase tracking-wider text-center">
                       Pro
