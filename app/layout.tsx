@@ -1,17 +1,32 @@
 import type { Metadata } from "next";
-import { Sunflower, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 
-const sunflower = Sunflower({
-  weight: ["300", "500", "700"],
-  subsets: ["latin"],
+const sunflower = localFont({
+  src: [
+    {
+      path: "../public/fonts/Sunflower-Light.ttf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Sunflower-Medium.ttf",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/Sunflower-Bold.ttf",
+      weight: "700",
+      style: "normal",
+    },
+  ],
   variable: "--font-sunflower",
   display: "swap",
   adjustFontFallback: false,
 });
 
-const inter = Inter({
-  subsets: ["latin"],
+const inter = localFont({
+  src: "../public/fonts/Inter.woff2",
   variable: "--font-inter",
   display: "swap",
 });
