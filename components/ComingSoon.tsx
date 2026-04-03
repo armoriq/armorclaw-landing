@@ -39,7 +39,7 @@ export default function ComingSoon() {
             and actionable recommendations.
           </p>
           <p className="mt-6 text-accent font-medium font-body">
-            Dropping next week.
+            Coming soon.
           </p>
         </div>
       </div>
