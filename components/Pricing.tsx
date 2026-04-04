@@ -9,9 +9,11 @@ gsap.registerPlugin(ScrollTrigger);
 const PLANS = [
   {
     name: "Free",
-    price: "$0",
-    period: "/month",
-    annualNote: "",
+    monthlyPrice: "$0",
+    yearlyPrice: "$0",
+    monthlyPeriod: "/month",
+    yearlyPeriod: "/month",
+    yearlySaving: "",
     description:
       "Get started with ArmorClaw. Perfect for exploring intent assurance on personal projects.",
     features: [
@@ -29,9 +31,11 @@ const PLANS = [
   {
     name: "Pro",
     badge: "Recommended",
-    price: "$200",
-    period: "/year",
-    annualNote: "$16.67/mo — save $40/year",
+    monthlyPrice: "$20",
+    yearlyPrice: "$200",
+    monthlyPeriod: "/month",
+    yearlyPeriod: "/year",
+    yearlySaving: "Save 17%",
     description:
       "Full intent assurance for production agent workloads with custom policy control.",
     features: [
@@ -51,9 +55,11 @@ const PLANS = [
   },
   {
     name: "Enterprise",
-    price: "Custom",
-    period: "",
-    annualNote: "",
+    monthlyPrice: "Custom",
+    yearlyPrice: "Custom",
+    monthlyPeriod: "",
+    yearlyPeriod: "",
+    yearlySaving: "",
     description:
       "Dedicated infrastructure, compliance, and support tailored to your organization.",
     features: [
@@ -145,6 +151,7 @@ const COMPARISON_ROWS = [
 export default function Pricing() {
   const sectionRef = useRef<HTMLElement>(null);
   const [showComparison, setShowComparison] = useState(false);
+  const [isYearly, setIsYearly] = useState(false);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -192,6 +199,7 @@ export default function Pricing() {
           <p className="mt-4 text-lg text-secondary font-body">
             Start free. Scale when you&apos;re ready.
           </p>
+
         </div>
 
         {/* Cards */}
@@ -218,17 +226,63 @@ export default function Pricing() {
                 </div>
                 <div className="mt-2 flex items-baseline gap-1">
                   <span className="text-3xl md:text-4xl font-bold font-heading">
-                    {plan.price}
+                    {plan.tier === "pro"
+                      ? isYearly ? plan.yearlyPrice : plan.monthlyPrice
+                      : plan.monthlyPrice}
                   </span>
-                  {plan.period && (
+                  {(plan.tier === "pro"
+                    ? isYearly ? plan.yearlyPeriod : plan.monthlyPeriod
+                    : plan.monthlyPeriod) && (
                     <span className="text-secondary font-body">
-                      {plan.period}
+                      {plan.tier === "pro"
+                        ? isYearly ? plan.yearlyPeriod : plan.monthlyPeriod
+                        : plan.monthlyPeriod}
                     </span>
                   )}
                 </div>
-                {plan.annualNote && (
-                  <p className="mt-1 text-xs text-accent font-medium font-body">
-                    {plan.annualNote}
+                {/* Billing toggle — Pro only */}
+                {plan.tier === "pro" && (
+                  <div className="mt-3 flex items-center gap-2">
+                    <span
+                      className={`text-xs font-medium font-body transition-colors duration-200 ${
+                        !isYearly ? "text-primary" : "text-secondary"
+                      }`}
+                    >
+                      Monthly
+                    </span>
+                    <button
+                      onClick={() => setIsYearly((prev) => !prev)}
+                      className={`relative w-11 h-[22px] rounded-full transition-colors duration-300 cursor-pointer ${
+                        isYearly ? "bg-accent" : "bg-secondary/30"
+                      }`}
+                      aria-label="Toggle billing period"
+                    >
+                      <span
+                        className={`absolute top-[2px] left-[2px] w-[18px] h-[18px] rounded-full bg-white shadow-md transition-transform duration-300 ${
+                          isYearly ? "translate-x-[20px]" : "translate-x-0"
+                        }`}
+                      />
+                    </button>
+                    <span
+                      className={`text-xs font-medium font-body transition-colors duration-200 ${
+                        isYearly ? "text-primary" : "text-secondary"
+                      }`}
+                    >
+                      Yearly
+                    </span>
+                    {isYearly && (
+                      <span className="text-[10px] font-bold uppercase tracking-wider bg-green-500/15 text-green-600 px-2 py-0.5 rounded-full border border-green-500/20">
+                        Save 17%
+                      </span>
+                    )}
+                  </div>
+                )}
+                {plan.tier === "pro" && isYearly && (
+                  <p className="mt-1.5 inline-flex items-center gap-1 text-xs font-semibold font-body text-green-600 bg-green-500/10 px-2 py-0.5 rounded-full">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                    $16.67/mo billed annually
                   </p>
                 )}
                 <p className="mt-2 text-sm text-secondary font-body leading-relaxed">
@@ -250,8 +304,10 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              <button
-                onClick={() => {}}
+              <a
+                href={plan.tier === "enterprise" ? "mailto:contact@armoriq.ai" : "https://tally.so/r/obdgxM"}
+                target={plan.tier === "enterprise" ? undefined : "_blank"}
+                rel={plan.tier === "enterprise" ? undefined : "noopener noreferrer"}
                 className={`mt-5 block w-full text-center py-2.5 rounded-full text-sm font-medium font-body transition-colors duration-200 cursor-pointer ${
                   plan.featured
                     ? "bg-accent text-white hover:bg-accent-hover"
@@ -259,7 +315,7 @@ export default function Pricing() {
                 }`}
               >
                 {plan.cta}
-              </button>
+              </a>
             </div>
           ))}
         </div>
