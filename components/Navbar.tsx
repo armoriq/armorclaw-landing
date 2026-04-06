@@ -64,7 +64,9 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="#pricing"
+            href="https://tally.so/r/obdgxM"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
           >
             Get Started
@@ -122,7 +124,9 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="#pricing"
+            href="https://tally.so/r/obdgxM"
+            target="_blank"
+            rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}
             className="inline-flex justify-center px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors sm:hidden"
           >
