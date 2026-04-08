@@ -64,7 +64,7 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="https://tally.so/r/obdgxM"
+            href="https://app.armoriq.ai/auth"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex px-6 py-2 bg-accent text-white text-sm font-medium rounded-full hover:bg-accent-hover transition-colors duration-200"
@@ -124,7 +124,7 @@ export default function Navbar() {
             Docs
           </a>
           <a
-            href="https://tally.so/r/obdgxM"
+            href="https://app.armoriq.ai/auth"
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => setMenuOpen(false)}

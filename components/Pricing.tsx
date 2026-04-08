@@ -305,7 +305,7 @@ export default function Pricing() {
               </ul>
 
               <a
-                href={plan.tier === "enterprise" ? "mailto:contact@armoriq.ai" : "https://tally.so/r/obdgxM"}
+                href={plan.tier === "enterprise" ? "mailto:contact@armoriq.ai" : "https://app.armoriq.ai/auth"}
                 target={plan.tier === "enterprise" ? undefined : "_blank"}
                 rel={plan.tier === "enterprise" ? undefined : "noopener noreferrer"}
                 className={`mt-5 block w-full text-center py-2.5 rounded-full text-sm font-medium font-body transition-colors duration-200 cursor-pointer ${
