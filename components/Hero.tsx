@@ -381,7 +381,7 @@ export default function Hero() {
 
         <div className="hero-cta-group mt-10 flex flex-col sm:flex-row gap-4 justify-center">
           <a
-            href="https://tally.so/r/obdgxM"
+            href="https://app.armoriq.ai/auth"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-3.5 bg-accent text-white font-medium font-body rounded-full hover:bg-accent-hover transition-colors duration-200 text-base"
