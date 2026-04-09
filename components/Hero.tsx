@@ -8,13 +8,14 @@ export default function Hero() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.set([".hero-line", ".hero-divider", ".hero-sub", ".hero-cta-group"], {
+      gsap.set([".hero-line", ".hero-divider", ".hero-sub", ".hero-cta-group", ".hero-ph-badge"], {
         opacity: 0,
       });
       gsap.set(".hero-line", { y: 18 });
       gsap.set(".hero-divider", { scaleX: 0 });
       gsap.set(".hero-sub", { y: 12 });
       gsap.set(".hero-cta-group", { y: 12 });
+      gsap.set(".hero-ph-badge", { y: 12 });
 
       const tl = gsap.timeline({ delay: 0.15 });
 
@@ -37,6 +38,11 @@ export default function Hero() {
         )
         .to(
           ".hero-cta-group",
+          { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
+          "-=0.15"
+        )
+        .to(
+          ".hero-ph-badge",
           { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
           "-=0.15"
         );
@@ -395,6 +401,21 @@ export default function Hero() {
             className="inline-flex items-center justify-center px-8 py-3.5 border-2 border-primary text-primary font-medium font-body rounded-full hover:bg-primary hover:text-white transition-colors duration-200 text-base"
           >
             Docs
+          </a>
+        </div>
+
+        <div className="hero-ph-badge mt-8 flex justify-center">
+          <a
+            href="https://www.producthunt.com/products/armorclaw?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-armorclaw"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1117682&theme=light&t=1775728307002"
+              alt="ArmorClaw - ArmorClaw by ArmorIQ | Product Hunt"
+              width="250"
+              height="54"
+            />
           </a>
         </div>
       </div>
